@@ -10,6 +10,26 @@ pageClass: routes
 
 <Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['排序方式, `best` 或 `newest`, 缺省 `best`']"/>
 
+## hameln
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://syosetu.org/novel/264928/>
+
+</Route>
+
+## kakuyomu
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://kakuyomu.jp/works/1177354054883783581>
+
+</Route>
+
 ## Kindle Unlimited
 
 ### 会员限时免费读书单
@@ -70,6 +90,16 @@ pageClass: routes
 | 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |
 | 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业  |
 | 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通  |
+
+</Route>
+
+## syosetu
+
+### 章节更新
+
+<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']">
+
+举例网址：<https://ncode.syosetu.com/n1976ey/>
 
 </Route>
 
@@ -396,6 +426,18 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 | 网址                              | 对应路由               |
 | ------------------------------- | ------------------ |
 | <http://news.bioon.com/biology> | /shengwugu/biology |
+
+## 书伴
+
+### 分类
+
+<Route author="OdinZhang" example="/bookfere/skills" path="/bookfere/:category" :paramsDesc="['分类名']">
+
+| 每周一书   | 使用技巧   | 图书推荐  | 新闻速递 | 精选短文  |
+| ------ | ------ | ----- | ---- | ----- |
+| weekly | skills | books | news | essay |
+
+</Route>
 
 ## 书趣阁
 

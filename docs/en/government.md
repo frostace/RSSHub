@@ -2,7 +2,7 @@
 pageClass: routes
 ---
 
-# Goverment
+# Government
 
 ## Central Intelligence Agency
 
@@ -106,6 +106,10 @@ Fill in the English expression for the month in the Month field, eg `December` f
 | | blog | legislation | presidential-actions | press-briefings | speeches-remarks | statements-releases |
 
 </RouteEn>
+
+### Office of Science and Technology Policy
+
+<RouteEn author="LyleLee" example="/whitehouse/ostp" path="/whitehouse/ostp"/>
 
 ## U.S. Department of the Treasury
 

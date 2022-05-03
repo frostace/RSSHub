@@ -397,7 +397,7 @@ pageClass: routes
 
 ### Steam search
 
-<Route author="maple3142" example="/steam/search/specials=1&term=atelier" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
+<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
 
 参数 params 请从 Steam 的 URL 取得
 
@@ -433,23 +433,31 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 游戏论坛
 
-<Route author="hoilc" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:label?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '论坛版块ID, 默认显示所有帖子, 论坛版块URL中`group_label_id`参数，特别的有']"/>
+<Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']">
 
-| 全部  | 精华    | 官方       |
-| --- | ----- | -------- |
-| all | elite | official |
+| 全部   | 精华    | 官方       | 影片    |
+| ---- | ----- | -------- | ----- |
+| feed | elite | official | video |
+
+| 发布时间    | 回复时间      |
+| ------- | --------- |
+| created | commented |
+
+</Route>
 
 ### 游戏更新
 
-<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏ID, 游戏主页URL中获取']"/>
+<Route author="hoilc" example="/taptap/changelog/142793" path="/taptap/changelog/:id" :paramsDesc="['游戏 ID，游戏主页 URL 中获取']"/>
 
 ### 游戏评价
 
-<Route author="hoilc" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?" :paramsDesc="['游戏ID, 游戏主页URL中获取', '排序方式, 空为默认排序, 可选如下']"/>
+<Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']"/>
 
-| 最新     | 最热  | 游戏时长  |
-| ------ | --- | ----- |
-| update | hot | spent |
+| 最新     | 最热  | 游戏时长  | 默认排序    |
+| ------ | --- | ----- | ------- |
+| update | hot | spent | default |
+
+</Route>
 
 ## 巴哈姆特
 
@@ -573,11 +581,47 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
+### 米游社 - 官方公告
+
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:last_id?" :paramsDesc="['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']" radar="1">
+
+游戏 id
+
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 |
+| --- | -- | --- | ----- | ---- |
+| 1   | 2  | 3   | 4     | 6    |
+
+公告类型
+
+| 公告 | 活动 | 资讯 |
+| -- | -- | -- |
+| 1  | 2  | 3  |
+
+</Route>
+
 ## 明日方舟
 
 ### 游戏公告与新闻
 
 <Route author="Astrian" example="/arknights/news" path="/arknights/news"/>
+
+### 游戏内公告
+
+<Route author="swwind" example="/arknights/announce" path="/arknights/announce/:platform?/:group?" :paramsDesc="['平台，默认为 Android','分组，默认为 ALL']">
+
+平台
+
+|   安卓服   | iOS 服 |    B 服   |
+| :-----: | :---: | :------: |
+| Android |  IOS  | Bilibili |
+
+分组
+
+|  全部 |  系统公告  |   活动公告   |
+| :-: | :----: | :------: |
+| ALL | SYSTEM | ACTIVITY |
+
+</Route>
 
 ### アークナイツ (日服新闻)
 
