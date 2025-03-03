@@ -13299,6 +13299,43 @@
     "url": "news.blizzard.com",
     "lang": "en"
   },
+  "blockworks": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "finance"
+        ],
+        "example": "/blockworks",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "blockworks.co/"
+            ],
+            "target": "/"
+          }
+        ],
+        "name": "Blockworks News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "description": "Blockworks news with full text support.",
+        "location": "index.ts"
+      }
+    },
+    "name": "Blockworks",
+    "url": "blockworks.co",
+    "lang": "en"
+  },
   "blogread": {
     "routes": {
       "/newest": {
@@ -21029,10 +21066,78 @@
         ],
         "url": "coindesk.com/",
         "location": "index.ts"
+      },
+      "/news": {
+        "path": "/news",
+        "categories": [
+          "finance"
+        ],
+        "example": "/coindesk/news",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "CoinDesk News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "coindesk.com/"
+            ],
+            "target": "/news"
+          }
+        ],
+        "description": "Get latest news from CoinDesk with full text.",
+        "location": "news.ts"
       }
     },
-    "name": "CoinDesk Consensus Magazine",
+    "name": "CoinDesk",
     "url": "coindesk.com",
+    "lang": "en",
+    "description": "CoinDesk is a news site specializing in bitcoin and digital currencies, delivering news, analysis, and information about the blockchain ecosystem."
+  },
+  "cointelegraph": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "finance"
+        ],
+        "example": "/cointelegraph",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Cointelegraph News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cointelegraph.com/"
+            ],
+            "target": "/"
+          }
+        ],
+        "description": "Get latest news from Cointelegraph with full text.",
+        "location": "index.ts"
+      }
+    },
+    "name": "Cointelegraph",
+    "url": "cointelegraph.com",
     "lang": "en"
   },
   "colamanga": {
@@ -22276,6 +22381,43 @@
     },
     "name": "Crossbell",
     "url": "crossbell.io",
+    "lang": "en"
+  },
+  "cryptoslate": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "finance"
+        ],
+        "example": "/cryptoslate",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "CryptoSlate News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "cryptoslate.com/"
+            ],
+            "target": "/"
+          }
+        ],
+        "description": "Get latest news from CryptoSlate.",
+        "location": "index.ts"
+      }
+    },
+    "name": "CryptoSlate",
+    "url": "cryptoslate.com",
     "lang": "en"
   },
   "cs": {
@@ -24150,6 +24292,43 @@
     },
     "name": "DealStreetAsia",
     "url": "dealstreetasia.com",
+    "lang": "en"
+  },
+  "decrypt": {
+    "routes": {
+      "/": {
+        "path": "/",
+        "categories": [
+          "finance"
+        ],
+        "example": "/decrypt",
+        "parameters": {},
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Decrypt News",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "decrypt.co/"
+            ],
+            "target": "/"
+          }
+        ],
+        "description": "Get latest news from Decrypt.",
+        "location": "index.ts"
+      }
+    },
+    "name": "Decrypt",
+    "url": "decrypt.co",
     "lang": "en"
   },
   "dedao": {
@@ -90463,6 +90642,45 @@
     },
     "name": "The Atlantic",
     "url": "www.theatlantic.com",
+    "lang": "en"
+  },
+  "theblock": {
+    "routes": {
+      "/category/:category": {
+        "path": "/category/:category",
+        "categories": [
+          "finance"
+        ],
+        "example": "/theblock/category/crypto-ecosystems",
+        "parameters": {
+          "category": "`category` is the category of theblock"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "name": "Category",
+        "maintainers": [
+          "pseudoyu"
+        ],
+        "radar": [
+          {
+            "source": [
+              "theblock.co/category/:category"
+            ],
+            "target": "/category/:category"
+          }
+        ],
+        "description": "Get latest news from TheBlock by category. Note that due to website limitations, only article summaries may be available.",
+        "location": "index.ts"
+      }
+    },
+    "name": "TheBlock",
+    "url": "theblock.co",
     "lang": "en"
   },
   "theblockbeats": {

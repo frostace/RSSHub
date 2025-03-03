@@ -5760,6 +5760,19 @@
       }
     ]
   },
+  "blockworks.co": {
+    "_name": "Blockworks",
+    ".": [
+      {
+        "title": "Blockworks News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/blockworks/"
+      }
+    ]
+  },
   "blogread.cn": {
     "_name": "技术头条",
     ".": [
@@ -9282,7 +9295,7 @@
     ]
   },
   "coindesk.com": {
-    "_name": "CoinDesk Consensus Magazine",
+    "_name": "CoinDesk",
     ".": [
       {
         "title": "新闻周刊",
@@ -9291,6 +9304,27 @@
           "/"
         ],
         "target": "/coindesk/consensus-magazine"
+      },
+      {
+        "title": "CoinDesk News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/coindesk/news"
+      }
+    ]
+  },
+  "cointelegraph.com": {
+    "_name": "Cointelegraph",
+    ".": [
+      {
+        "title": "Cointelegraph News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/cointelegraph/"
       }
     ]
   },
@@ -9702,6 +9736,19 @@
           "/*"
         ],
         "target": "/crossbell/notes"
+      }
+    ]
+  },
+  "cryptoslate.com": {
+    "_name": "CryptoSlate",
+    ".": [
+      {
+        "title": "CryptoSlate News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/cryptoslate/"
       }
     ]
   },
@@ -10249,6 +10296,19 @@
           "/"
         ],
         "target": "/dealstreetasia/section/:section"
+      }
+    ]
+  },
+  "decrypt.co": {
+    "_name": "Decrypt",
+    ".": [
+      {
+        "title": "Decrypt News",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/"
+        ],
+        "target": "/decrypt/"
       }
     ]
   },
@@ -33533,6 +33593,19 @@
           "/:category"
         ],
         "target": "/theatlantic/:category"
+      }
+    ]
+  },
+  "theblock.co": {
+    "_name": "TheBlock",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/finance",
+        "source": [
+          "/category/:category"
+        ],
+        "target": "/theblock/category/:category"
       }
     ]
   },

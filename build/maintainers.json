@@ -971,6 +971,9 @@
   "/blizzard/news/:language?/:category?": [
     "nczitzk"
   ],
+  "/blockworks/": [
+    "pseudoyu"
+  ],
   "/blogread/newest": [
     "fashioncj"
   ],
@@ -1554,6 +1557,12 @@
   "/coindesk/consensus-magazine": [
     "jameshih"
   ],
+  "/coindesk/news": [
+    "pseudoyu"
+  ],
+  "/cointelegraph/": [
+    "pseudoyu"
+  ],
   "/colamanga/:id": [
     "machsix"
   ],
@@ -1650,6 +1659,9 @@
   ],
   "/crossbell/notes/source/:source": [
     "DIYgod"
+  ],
+  "/cryptoslate/": [
+    "pseudoyu"
   ],
   "/cs/:category{.+}?": [
     "nczitzk"
@@ -1813,6 +1825,9 @@
   ],
   "/dealstreetasia/section/:section": [
     "jack2game"
+  ],
+  "/decrypt/": [
+    "pseudoyu"
   ],
   "/dedao/articles/:id?": [
     "Jacky-Chen-Pro"
@@ -7027,6 +7042,9 @@
   ],
   "/theatlantic/:category": [
     "EthanWng97",
+    "pseudoyu"
+  ],
+  "/theblock/category/:category": [
     "pseudoyu"
   ],
   "/theblockbeats/:channel?/:original?": [
