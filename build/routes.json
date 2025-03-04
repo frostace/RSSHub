@@ -21120,7 +21120,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Cointelegraph News",
+        "name": "News",
         "maintainers": [
           "pseudoyu"
         ],
@@ -22400,7 +22400,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "CryptoSlate News",
+        "name": "News",
         "maintainers": [
           "pseudoyu"
         ],
@@ -24311,7 +24311,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
-        "name": "Decrypt News",
+        "name": "News",
         "maintainers": [
           "pseudoyu"
         ],
@@ -90653,7 +90653,7 @@
         ],
         "example": "/theblock/category/crypto-ecosystems",
         "parameters": {
-          "category": "`category` is the category of theblock"
+          "category": "News category"
         },
         "features": {
           "requireConfig": false,
