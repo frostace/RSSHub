@@ -299,7 +299,8 @@
     "zhenhappy"
   ],
   "/academia/topic/:interest": [
-    "K33k0"
+    "K33k0",
+    "cscnk52"
   ],
   "/accessbriefing/:category{.+}?": [
     "nczitzk"
@@ -4692,6 +4693,9 @@
   "/meituan/tech": [
     "ktKongTong",
     "cscnk52"
+  ],
+  "/mercari/:sort/:order/:status/:keyword": [
+    "yana9i"
   ],
   "/metacritic/:type?/:sort?/:filter?": [],
   "/meteor/boards": [
