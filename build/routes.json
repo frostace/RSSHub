@@ -79124,6 +79124,37 @@
         "description": "`sciencedirect.com/browse/calls-for-papers?subject=education` -> `/sciencedirect/call-for-paper/education`",
         "location": "call-for-paper.ts"
       },
+      "/journal/:id/current": {
+        "path": "/journal/:id/current",
+        "categories": [
+          "journal"
+        ],
+        "example": "/sciencedirect/journal/journal-of-financial-economics/current",
+        "parameters": {
+          "id": "Journal id, can be found in URL"
+        },
+        "features": {
+          "requireConfig": false,
+          "requirePuppeteer": false,
+          "antiCrawler": false,
+          "supportBT": false,
+          "supportPodcast": false,
+          "supportScihub": false
+        },
+        "radar": [
+          {
+            "source": [
+              "sciencedirect.com/journal/:id",
+              "sciencedirect.com/"
+            ]
+          }
+        ],
+        "name": "Current Issue",
+        "maintainers": [
+          "TonyRL"
+        ],
+        "location": "current-issue.ts"
+      },
       "/journal/:id": {
         "path": "/journal/:id",
         "categories": [
@@ -84643,6 +84674,7 @@
           "supportPodcast": false,
           "supportScihub": false
         },
+        "description": "::: warning\nDue to [limitations by Spotify](https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api), this endpoint is unable to access \"Algorithmic and Spotify-owned editorial playlists\".\n:::",
         "radar": [
           {
             "source": [
