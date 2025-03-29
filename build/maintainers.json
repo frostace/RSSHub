@@ -6091,6 +6091,9 @@
   "/rarehistoricalphotos/": [
     "TonyRL"
   ],
+  "/raspberrypi/magazine": [
+    "nczitzk"
+  ],
   "/rattibha/user/:user": [
     "yshalsager"
   ],
@@ -7351,6 +7354,9 @@
   "/tradingview/pine/:version?": [],
   "/transcriptforest/:channel?": [
     "nczitzk"
+  ],
+  "/transformer-circuits/": [
+    "shinmohuang"
   ],
   "/trending/:keywords/:numberOfDays?": [
     "Jkker"
