@@ -1,7 +1,8 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.cst.zju.edu.cn/';
@@ -29,19 +30,14 @@ async function getPage(id) {
     const $ = load(res.data);
     const list = $('.lm_new').find('li');
 
-    return (
-        list &&
-        list
-            .map((index, item) => {
-                item = $(item);
-                return {
-                    title: item.find('a').text(),
-                    pubDate: parseDate(item.find('.fr').text()),
-                    link: new URL(item.find('a').attr('href'), host).href,
-                };
-            })
-            .get()
-    );
+    return list.toArray().map((item) => {
+        const $item = $(item);
+        return {
+            title: $item.find('a').text(),
+            pubDate: parseDate($item.find('.fr').text()),
+            link: new URL($item.find('a').attr('href')!, host).href,
+        };
+    });
 }
 
 export const route: Route = {
@@ -67,19 +63,16 @@ export const route: Route = {
 
 async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
-    const link = host + map.get(type).id;
-    let items = [];
+    const link = host + map.get(type)!.id;
+    let items: any[] = [];
     if (type === 0) {
-        const tasks = [];
-        for (const value of map.values()) {
-            tasks.push(getPage(value.id));
-        }
+        const tasks = Array.from(map.values(), (value) => getPage(value.id));
         const results = await Promise.all(tasks);
         for (const result of results) {
             items = [...items, ...result];
         }
     } else {
-        items = await getPage(map.get(type).id);
+        items = await getPage(map.get(type)!.id);
     }
 
     const out = await Promise.all(
@@ -100,7 +93,7 @@ async function handler(ctx) {
     );
 
     return {
-        title: map.get(type).title,
+        title: map.get(type)!.title,
         link,
         item: out,
     };

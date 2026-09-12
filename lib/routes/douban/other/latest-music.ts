@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 export const route: Route = {
     path: '/music/latest/:area?',
@@ -32,7 +33,7 @@ async function handler(ctx) {
         const url = 'https://music.douban.com/latest';
         const res = await got.get(url);
         const $ = load(res.data);
-        const list = $('.dlist').get();
+        const list = $('.dlist').toArray();
 
         data = {
             title,

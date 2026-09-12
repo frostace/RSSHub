@@ -1,6 +1,7 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 
 const rootUrl = 'https://jobs.douban.com';
 
@@ -39,13 +40,11 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('div.mod.position');
 
-    const items = list
-        .map((_, item) => ({
-            title: $(item).find('h3').text(),
-            link: `${url}#${$(item).find('h3').attr('id')}`,
-            description: $(item).find('div.bd').html(),
-        }))
-        .get();
+    const items = list.toArray().map((item) => ({
+        title: $(item).find('h3').text(),
+        link: `${url}#${$(item).find('h3').attr('id')}`,
+        description: $(item).find('div.bd').html(),
+    }));
 
     return {
         title: `豆瓣${titleMap[type]}`,

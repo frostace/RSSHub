@@ -1,7 +1,9 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
+
 import { getContent } from './utils';
 
 const map = new Map([
@@ -42,7 +44,7 @@ export const route: Route = {
 | ------------ | ------------ | ------------ | ------------ |
 | 16           | 17           | 18           | 19           |
 
-  \`type\` 列表：
+\`type\` 列表：
 
 | 年级通知（通知公告） | 每日动态（主任寄语） |
 | -------------------- | -------------------- |
@@ -70,14 +72,10 @@ async function handler(ctx) {
     return {
         title: info.title,
         link: siteUrl,
-        item:
-            list &&
-            list
-                .map((index, item) => ({
-                    title: $(item).find('a').text().trim(),
-                    pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), +8),
-                    link: $(item).find('a').attr('href'),
-                }))
-                .get(),
+        item: list.toArray().map((item) => ({
+            title: $(item).find('a').text().trim(),
+            pubDate: timezone(parseDate($(item).find('span.Article_PublishDate').text(), 'YYYY-MM-DD'), 8),
+            link: $(item).find('a').attr('href'),
+        })),
     };
 }
