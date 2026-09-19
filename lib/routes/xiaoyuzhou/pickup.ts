@@ -1,7 +1,7 @@
-import { Route } from '@/types';
+import { config } from '@/config';
+import type { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { config } from '@/config';
 
 const XIAOYUZHOU_ITEMS = 'xiaoyuzhou_items';
 
@@ -42,10 +42,11 @@ const ProcessFeed = async () => {
             ...headers,
             'x-jike-access-token': token_updated.data['x-jike-access-token'],
         },
+        json: {},
     });
 
     const data = response.data.data;
-    const playList = [];
+    const playList: any[] = [];
     for (const dailyPicks of data) {
         const pubDate = new Date(dailyPicks.date + ' 00:00:00 +0800').toUTCString();
         for (const pick of dailyPicks.picks) {
@@ -57,7 +58,7 @@ const ProcessFeed = async () => {
     return playList.map((item) => {
         const title = item.episode.title + ' - ' + item.episode.podcast.title;
         const eid = item.episode.eid;
-        const itunes_item_image = item.episode.image ? item.episode.image.picUrl : (item.episode.podcast.image ? item.episode.podcast.image.picUrl : '');
+        const itunes_item_image = item.episode.image ? item.episode.image.picUrl : item.episode.podcast.image ? item.episode.podcast.image.picUrl : '';
         const link = `https://www.xiaoyuzhoufm.com/episode/${eid}`;
         const pubDate = item.pubDate;
         const itunes_duration = item.episode.duration;
@@ -87,10 +88,15 @@ export const route: Route = {
             target: '',
         },
     ],
-    name: 'Unknown',
+    name: '发现',
+    example: '/xiaoyuzhou',
+    categories: ['multimedia'],
     maintainers: ['prnake', 'Maecenas'],
     handler,
     url: 'xiaoyuzhoufm.com/',
+    description: `::: warning
+小宇宙的 api 需要验证 \`x-jike-device-id\`、\`x-jike-access-token\` 和 \`x-jike-refresh-token\` 。必要时需要自行配置，具体见部署文档。
+:::`,
 };
 
 async function handler() {

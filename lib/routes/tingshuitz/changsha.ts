@@ -1,7 +1,9 @@
-import { Route } from '@/types';
-import got from '@/utils/got';
 import { load } from 'cheerio';
+
+import type { Route } from '@/types';
+import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
+
 const baseUrl = 'http://www.supplywater.com';
 
 export const route: Route = {
@@ -34,15 +36,15 @@ async function handler(ctx) {
     const $ = load(listPage.data);
     const pageName = $('.mainRightBox .news-title').text();
     const list = $('.mainRightBox .announcements-title a')
-        .map((_, item) => {
-            item = $(item);
+        .toArray()
+        .map((item) => {
+            const $item = $(item);
 
             return {
-                title: item.text().trim(),
-                link: baseUrl + item.attr('href').trim(),
+                title: $item.text().trim(),
+                link: baseUrl + $item.attr('href')!.trim(),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map(async (item) => {
@@ -51,7 +53,7 @@ async function handler(ctx) {
 
             const data = {
                 title: item.title,
-                description: $('.mainRightBox div:last').html().trim(),
+                description: $('.mainRightBox div:last').html()!.trim(),
                 pubDate: parseDate($('.mainRightBox .gxsj span:first').text() + ' +0800', 'YYYY/M/D H:m:s ZZ'),
                 link: item.link,
                 author: $('.mainRightBox .gxsj span:last').text(),
