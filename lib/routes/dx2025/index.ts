@@ -1,11 +1,12 @@
-import { Route } from '@/types';
+import { load } from 'cheerio';
+
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:type?/:category?',
-    categories: ['new-media', 'popular'],
+    categories: ['new-media'],
     example: '/dx2025',
     parameters: { type: '内容类别，见下表，默认为空', category: '行业分类，见下表，默认为空' },
     features: {
@@ -25,7 +26,7 @@ export const route: Route = {
 | -------------------- | ---------------- | ------ | ---- |
 | industry-observation | industry-reports | policy | data |
 
-  行业分类
+行业分类
 
 | 行业                 | 行业名称                                                          |
 | -------------------- | ----------------------------------------------------------------- |
@@ -58,18 +59,18 @@ async function handler(ctx) {
 
     const list = $('.entry-title a')
         .slice(0, 10)
-        .map((_, item) => {
-            item = $(item);
+        .toArray()
+        .map((item): DataItem => {
+            const $item = $(item);
             return {
-                title: item.text(),
-                link: item.attr('href'),
+                title: $item.text(),
+                link: $item.attr('href'),
             };
-        })
-        .get();
+        });
 
     const items = await Promise.all(
         list.map((item) =>
-            cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link!, async () => {
                 const detailResponse = await got({
                     method: 'get',
                     url: item.link,
@@ -78,7 +79,7 @@ async function handler(ctx) {
 
                 item.author = content('.entry-author-name').text();
                 item.description = content('.bpp-post-content, .entry-content').html();
-                item.pubDate = new Date(content('.entry-date').attr('datetime')).toUTCString();
+                item.pubDate = new Date(content('.entry-date').attr('datetime')!).toUTCString();
 
                 return item;
             })

@@ -1,8 +1,12 @@
-import { Route, ViewType, Collection, CollectionItem } from '@/types';
-import got from '@/utils/got';
-import { header } from './utils';
-import { parseDate } from '@/utils/parse-date';
+import { config } from '@/config';
+import type { Route } from '@/types';
+import { ViewType } from '@/types';
 import cache from '@/utils/cache';
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
+
+import type { Collection, CollectionItem } from './types';
+import { header } from './utils';
 
 export const route: Route = {
     path: '/people/allCollections/:id',
@@ -11,7 +15,12 @@ export const route: Route = {
     example: '/zhihu/people/allCollections/87-44-49-67',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {
-        requireConfig: false,
+        requireConfig: [
+            {
+                name: 'ZHIHU_COOKIES',
+                description: '',
+            },
+        ],
         requirePuppeteer: false,
         antiCrawler: true,
         supportBT: false,
@@ -35,6 +44,7 @@ async function handler(ctx) {
 
     const response = await got(apiPath, {
         headers: {
+            cookie: config.zhihu.cookies,
             Referer: `https://www.zhihu.com/people/${id}/collections`,
         },
     });
@@ -46,6 +56,7 @@ async function handler(ctx) {
             const firstPageResponse = await got(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=0&limit=20`, {
                 headers: {
                     ...header,
+                    cookie: config.zhihu.cookies,
                     Referer: `https://www.zhihu.com/collection/${collection.id}`,
                 },
             });
@@ -53,7 +64,7 @@ async function handler(ctx) {
             const {
                 data: items,
                 paging: { totals },
-            } = firstPageResponse.data;
+            }: { data: CollectionItem[]; paging: { totals: number } } = firstPageResponse.data;
 
             if (totals > 20) {
                 const offsetList = Array.from({ length: Math.ceil(totals / 20) - 1 }, (_, index) => (index + 1) * 20);
@@ -64,6 +75,7 @@ async function handler(ctx) {
                             const response = await got(`https://www.zhihu.com/api/v4/collections/${collection.id}/items?offset=${offset}&limit=20`, {
                                 headers: {
                                     ...header,
+                                    cookie: config.zhihu.cookies,
                                     Referer: `https://www.zhihu.com/collection/${collection.id}`,
                                 },
                             });
@@ -83,12 +95,11 @@ async function handler(ctx) {
         })
     );
 
-    const items = allCollectionItems.flatMap(
-        (collection) =>
-            collection.items.map((item) => ({
-                ...item,
-                collectionTitle: collection.collectionTitle,
-            })) as CollectionItem[]
+    const items = allCollectionItems.flatMap((collection) =>
+        collection.items.map((item) => ({
+            ...item,
+            collectionTitle: collection.collectionTitle,
+        }))
     );
 
     return {
@@ -98,11 +109,11 @@ async function handler(ctx) {
             const content = item.content;
 
             return {
-                title: content.type === 'article' || content.type === 'zvideo' ? content.title : content.question.title,
+                title: (content.type === 'article' || content.type === 'zvideo' ? content.title : content.question!.title)!,
                 link: content.url,
-                description: content.type === 'zvideo' ? `<img src=${content.video.url}/>` : content.content,
-                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time) * 1000),
-                category: [item.collectionTitle],
+                description: content.type === 'zvideo' ? `<img src=${content.video!.url}/>` : content.content,
+                pubDate: parseDate((content.type === 'article' ? content.updated : content.updated_time)! * 1000),
+                category: [item.collectionTitle!],
             };
         }),
     };
