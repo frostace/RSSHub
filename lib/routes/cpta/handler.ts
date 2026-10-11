@@ -1,8 +1,10 @@
-import { DataItem, Route } from '@/types';
+import { load } from 'cheerio';
+import pMap from 'p-map';
+
+import InvalidParameterError from '@/errors/types/invalid-parameter';
+import type { DataItem, Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-import { load } from 'cheerio';
-import asyncPool from 'tiny-async-pool';
 
 type NewsCategory = {
     title: string;
@@ -12,7 +14,7 @@ type NewsCategory = {
 
 const WEBSITE_URL = 'http://www.cpta.com.cn';
 
-const NEWS_TYPES: Record<string, NewsCategory> = {
+const NEWS_TYPES = {
     notice: {
         title: '通知公告',
         baseUrl: 'http://www.cpta.com.cn/notice.html',
@@ -23,10 +25,15 @@ const NEWS_TYPES: Record<string, NewsCategory> = {
         baseUrl: 'http://www.cpta.com.cn/performance.html',
         description: '中国人事考试网 考试成绩公布汇总',
     },
-};
+} satisfies Record<string, NewsCategory>;
+
+const isNewsType = (category: string): category is keyof typeof NEWS_TYPES => Object.hasOwn(NEWS_TYPES, category);
 
 const handler: Route['handler'] = async (ctx) => {
     const category = ctx.req.param('category');
+    if (!category || !isNewsType(category)) {
+        throw new InvalidParameterError(`Invalid category: ${category}. Use notice or performance.`);
+    }
     const BASE_URL = NEWS_TYPES[category].baseUrl;
     // Fetch the index page
     const { data: listResponse } = await got(BASE_URL);
@@ -50,11 +57,11 @@ const handler: Route['handler'] = async (ctx) => {
                 link: absoluteLink,
             };
         })
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        .toSorted((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
         .slice(0, 10);
 
     const fetchDataItem = (item: { title: string; date: string; link: string }) =>
-        cache.tryGet(item.link, async () => {
+        cache.tryGet(item.link, async (): Promise<DataItem> => {
             const CONTENT_SELECTOR = '#p_content';
             const { data: contentResponse } = await got(item.link);
             const contentPage = load(contentResponse);
@@ -74,14 +81,10 @@ const handler: Route['handler'] = async (ctx) => {
                 },
                 updated: item.date,
                 language: 'zh-CN',
-            } as DataItem;
+            };
         });
 
-    const dataItems: DataItem[] = [];
-
-    for await (const item of await asyncPool(1, contentLinkList, fetchDataItem)) {
-        dataItems.push(item as DataItem);
-    }
+    const dataItems: DataItem[] = await pMap(contentLinkList, fetchDataItem, { concurrency: 1 });
 
     return {
         title: `中国人事考试网-${NEWS_TYPES[category].title}`,
@@ -103,12 +106,10 @@ export const route: Route = {
     parameters: {
         category: '栏目参数，可见下表描述。',
     },
-    description: `
-| Category    | Title     | Description                         |
-|-------------|-----------|-------------------------------------|
-| notice      | 通知公告  | 中国人事考试网 考试通知公告汇总    |
-| performance | 成绩公布  | 中国人事考试网 考试成绩公布汇总    |
-`,
+    description: `| Category    | Title    | Description                     |
+| ----------- | -------- | ------------------------------- |
+| notice      | 通知公告 | 中国人事考试网 考试通知公告汇总 |
+| performance | 成绩公布 | 中国人事考试网 考试成绩公布汇总 |`,
     handler,
     categories: ['study'],
     features: {
@@ -124,12 +125,12 @@ export const route: Route = {
         {
             title: '中国人事考试网通知公告',
             source: ['www.cpta.com.cn/notice.html', 'www.cpta.com.cn'],
-            target: `/notice`,
+            target: '/notice',
         },
         {
             title: '中国人事考试网成绩发布',
             source: ['www.cpta.com.cn/performance.html', 'www.cpta.com.cn'],
-            target: `/performance`,
+            target: '/performance',
         },
     ],
     example: '/cpta/notice',
